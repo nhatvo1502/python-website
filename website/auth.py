@@ -55,7 +55,7 @@ def sign_up():
 			new_user = User(email=email, firstName=firstName, password=generate_password_hash(password1, method='pbkdf2:sha256'))
 			db.session.add(new_user)
 			db.session.commit()
-			login_user(user, remember=True)
+			login_user(new_user, remember=True)
 			flash('Account created!', category='success')
 			return redirect(url_for('views.home'))
 
@@ -63,4 +63,22 @@ def sign_up():
 
 @auth.route('/reset-password', methods=['GET', 'POST'])
 def reset_password():
+	if request.method == 'POST':
+		current_password = request.form.get('current_password')
+		new_password1 = request.form.get('new_password1')
+		new_password2 = request.form.get('new_password2')
+		
+		if check_password_hash(current_user.password, current_password) == False:
+			flash('Incorrect password!', category='error')
+		else:
+			if len(new_password1) < 7:
+				flash('Password must be at least 7 characters.', category='error')
+			elif new_password1!=new_password2:
+				flash('Password don\'t match', category='error')
+			else:
+				current_user.password = generate_password_hash(new_password1, method='pbkdf2:sha256')
+				db.session.commit()	
+				flash('Password  reset succesfully! Please login again.')
+				logout_user()
+				return redirect(url_for('auth.login'))
 	return render_template('reset_password.html', user=current_user)
