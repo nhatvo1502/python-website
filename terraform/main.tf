@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "web" {
   network_mode             = "awsvpc"
   cpu                      = 1024
   memory                   = 2048
-  execution_role_arn = var.ecsTaskExecutionRole 
+  execution_role_arn       = var.ecsTaskExecutionRole
   container_definitions = jsonencode([
     {
       name      = var.container_name
