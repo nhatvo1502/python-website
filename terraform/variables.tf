@@ -2,6 +2,34 @@ variable "region" {
   default = "us-east-1"
   type    = string
 }
+
+# NETWORK
+variable "vpc_name" {
+  default = "nnote_vpc"
+  type    = string
+}
+
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+  type    = string
+}
+
+variable "s1_cidr" {
+  default = "10.0.1.0/24"
+  type    = string
+}
+
+variable "s2_cidr" {
+  default = "10.0.2.0/24"
+  type    = string
+}
+
+variable "vpc_sg_name" {
+  default = "nnote_vpc_sg"
+  type    = string
+}
+
+# INFRASTRUCTURE
 variable "ecs_cluster_name" {
   default = "nnote-us-east-1-cluster"
   type    = string

@@ -3,4 +3,4 @@ website/__pycache__/
 .terraform/
 terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
-terraform/terraform.tfstate.back
+terraform/terraform.tfstate.backup
