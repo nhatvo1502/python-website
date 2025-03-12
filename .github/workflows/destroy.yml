@@ -24,15 +24,27 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform
+      - name: Terraform fmt
+        run:
+          terraform fmt -check
         working-directory: ./terraform
-        run: |
-          terraform fmt
-          terraform validate
-          terraform plan
-          terraform Destroy ---auto -approve
+        continue-on-error: true
+
+      - name: Terraform init
+        run: terraform init -input=false
+        working-directory: ./terraform
+
+      - name: Terraform validate
+        run: terraform validate
+        working-directory: ./terraform
+        continue-on-error: true
+
+      - name: Terraform Destroy
+        run: terraform destroy --auto-approve
+        working-directory: ./terraform
       
       - name: Empty and delete tfstate bucket
+        if: success()
         run: |
           aws s3 rm s3://nnote-tfstate-031225 --recursive
           aws s3 rb s3://nnote-tfstate-031225 --force
