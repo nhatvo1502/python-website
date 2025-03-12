@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-script:
     runs-on: ubuntu-latest
@@ -19,6 +23,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::566027688242:role/GitHubOIDCRole
           aws-region: us-east-1
+      
+      - name: Create tfstate bucket
+        run: aws s3 mb s3://nnote
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
