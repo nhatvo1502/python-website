@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
 # Create ECS Cluster
 resource "aws_ecs_cluster" "web" {
   name = var.ecs_cluster_name

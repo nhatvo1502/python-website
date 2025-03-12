@@ -5,3 +5,4 @@ terraform/*
 !terraform/backend.tf
 !terraform/main.tf
 !terraform/variables.tf
+!terraform/provider.tf
