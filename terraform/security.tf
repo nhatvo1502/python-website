@@ -1,4 +1,4 @@
-resource "aws_security_group" "nnote" {
+resource "aws_security_group" "nnote_vpc_sg" {
   name   = var.vpc_sg_name
   vpc_id = aws_vpc.nnote.id
 

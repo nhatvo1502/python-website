@@ -47,7 +47,7 @@ resource "aws_ecs_service" "web" {
 
   network_configuration {
     subnets          = [aws_subnet.s1, aws_subnet.s2]
-    security_groups  = [aws_security_group.nnote_vpc_sg]
+    security_groups  = [aws_security_group.nnote_vpc_sg.name]
     assign_public_ip = true
   }
 

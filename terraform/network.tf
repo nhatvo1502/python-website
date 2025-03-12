@@ -15,8 +15,8 @@ resource "aws_internet_gateway" "nnote" {
 }
 
 resource "aws_subnet" "s1" {
-  vpc_id                  = aws_vpc.nnote.id
-  cidr_block              = var.s1_cidr
+  vpc_id     = aws_vpc.nnote.id
+  cidr_block = var.s1_cidr
 
   tags = {
     Name = "nnote_vpc_s1"
@@ -24,8 +24,8 @@ resource "aws_subnet" "s1" {
 }
 
 resource "aws_subnet" "s2" {
-  vpc_id                          = aws_vpc.nnote.id
-  cidr_block                      = var.s2_cidr
+  vpc_id     = aws_vpc.nnote.id
+  cidr_block = var.s2_cidr
 
   tags = {
     Name = "nnote_vpc_s2"
