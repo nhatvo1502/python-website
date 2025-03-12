@@ -1,3 +1,7 @@
+variable "region" {
+  default = region
+  type    = string
+}
 variable "ecs_cluster_name" {
   default = "nnote-us-east-1-cluster"
   type    = string

@@ -1,6 +1,9 @@
 name: Deploy
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -42,6 +45,11 @@ jobs:
         working-directory: ./terraform
         continue-on-error: true
 
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./terraform
+        continue-on-error: false
+
       - name: Terraform Apply
         run: terraform apply --auto-approve
         working-directory: ./terraform
@@ -53,7 +61,34 @@ jobs:
           terraform destroy --auto-approve
           aws s3 rm s3://nnote-tfstate-031225 --recursive
           aws s3 rb s3://nnote-tfstate-031225 --force
-
-      - name: just some job
+      
+      - name: Export Terraform output
+        id: tf
         if: success()
-        run: ls
+        run: |
+          echo "TF_ECR_URI=${terraform output -raw ecr_uri}" >> $GITHUB_OUTPUT
+          echo "TF_CLUSTER_ARN=${terraform output -raw cluster_arn}" >> $GITHUB_OUTPUT
+          echo "TF_SERVICE_NAME=${terraform output -raw service_name}" >> $GITHUB_OUTPUT
+          echo "TF_REGION=${terraform output -raw region}" >> $GITHUB_OUTPUT
+
+      - name: Log in to ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ steps.tf.outputs.TF_ECR_URI }}
+      
+      - name: Build Docker
+        run: docker build -t nnote-app .
+      
+      - name: Tag Docker
+        run: docker tag nnote-app:latest ${{ steps.tf.outputs.TF_ECR_URI }}:latest
+
+      - name: Push Docker
+        run: docker push ${{ steps.tf.outputs.TF_ECR_URI }}:latest
+      
+      - name: Force Redeployment ECS
+        run: aws ecs update-service --cluster ${{ steps.tf.outputs.TF_CLUSTER_ARN }} --service ${{ steps.tf.outputs.TF_SERVICE_NAME }} --force-new-deployment --region ${{ steps.tf.outputs.TF_REGION }}
+      
+      - name: Auto clean up if Apply failed
+        if: failure()
+        run: |
+          terraform destroy --auto-approve
+          aws s3 rm s3://nnote-tfstate-031225 --recursive
+          aws s3 rb s3://nnote-tfstate-031225 --force

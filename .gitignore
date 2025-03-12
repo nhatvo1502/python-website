@@ -1,8 +1,6 @@
 venv/
 website/__pycache__/
-terraform/*
-
-!terraform/backend.tf
-!terraform/main.tf
-!terraform/variables.tf
-!terraform/provider.tf
+.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.back
