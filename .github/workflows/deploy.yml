@@ -25,7 +25,7 @@ jobs:
           aws-region: us-east-1
       
       - name: Create tfstate bucket
-        run: aws s3 mb s3://nnote-tfstate-bucket-031225
+        run: aws s3 mb s3://nnote_tfstate_031225
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
@@ -42,5 +42,6 @@ jobs:
         if: failure()
         run: |
           terraform destroy --auto-approve
-          aws s3 rm s3://nnote-tfstate-bucket-031225 --recursive
-          aws s3 rb s3://nnote-tfstate-bucket-031225 --force
+          aws s3 rm s3://nnote_tfstate_031225 --recursive
+          aws s3 rb s3://nnote_tfstate_031225 --force
+          

@@ -39,8 +39,8 @@ variable "ecs_role_name" {
 }
 
 variable "ecsTaskExecutionRole" {
-  default     = "arn:aws:iam::566027688242:role/ecsTaskExecutionRole"
-  type        = string
+  default = "arn:aws:iam::566027688242:role/ecsTaskExecutionRole"
+  type    = string
 }
 
 variable "ecs_service_name" {
@@ -49,5 +49,6 @@ variable "ecs_service_name" {
 }
 
 variable "be_bucket_name" {
-  default = nnote_tfstate_031225
+  default = "nnote_tfstate_031225"
+  type    = string
 }
