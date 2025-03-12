@@ -46,7 +46,7 @@ resource "aws_ecs_service" "web" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = [aws_subnet.s1, aws_subnet.s2]
+    subnets          = [aws_subnet.s1.name, aws_subnet.s2.name]
     security_groups  = [aws_security_group.nnote_vpc_sg.name]
     assign_public_ip = true
   }
