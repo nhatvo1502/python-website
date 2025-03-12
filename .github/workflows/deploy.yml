@@ -43,4 +43,4 @@ jobs:
         run: |
           terraform destroy --auto-approve
           aws s3 rm s3://nnote-tfstate-031225 --recursive
-          aws s3 rb s3://nnote-tfstate-031225--force
+          aws s3 rb s3://nnote-tfstate-031225 --force
