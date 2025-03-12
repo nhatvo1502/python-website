@@ -33,8 +33,9 @@ jobs:
       - name: Terraform
         working-directory: ./terraform
         run: |
-          terraform fmt
-          terraform validate
+          terraform init -input=false
+          terraform fmt -check
+          terraform validate -no-color
           terraform plan
           terraform apply ---auto -approve
       
