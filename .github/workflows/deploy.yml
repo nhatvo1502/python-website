@@ -64,20 +64,28 @@ jobs:
           aws s3 rm s3://nnote-tfstate-031225 --recursive
           aws s3 rb s3://nnote-tfstate-031225 --force
       
-      - name: Terraform Outputs
+      # - name: Terraform Outputs
+      #   run: |
+      #     ecr_uri=${terraform output ecr_uri}
+      #     echo $ecr_uri
+      #   working-directory: ./terraform
+      
+      - name: Export Terraform output
+        id: tf
+        if: success()
         run: |
-          ecr_uri=${terraform output ecr_uri}
-          echo $ecr_uri
+          echo "ECR_URI=${terraform output -raw ecr_uri}" >> $GITHUB_OUTPUT
+          echo "CLUSTER_ARN=${terraform output -raw cluster_arn}" >> $GITHUB_OUTPUT
+          echo "SERVICE_NAME=${terraform output -raw service_name}" >> $GITHUB_OUTPUT
+          echo "TF_REGION=${terraform output -raw region}" >> $GITHUB_OUTPUT
         working-directory: ./terraform
       
-      # - name: Export Terraform output
-      #   id: tf
-      #   if: success()
-      #   run: |
-      #     echo "TF_ECR_URI=${terraform output -raw ecr_uri}" >> $GITHUB_OUTPUT
-      #     echo "TF_CLUSTER_ARN=${terraform output -raw cluster_arn}" >> $GITHUB_OUTPUT
-      #     echo "TF_SERVICE_NAME=${terraform output -raw service_name}" >> $GITHUB_OUTPUT
-      #     echo "TF_REGION=${terraform output -raw region}" >> $GITHUB_OUTPUT
+      - name: Test TF Outputs terraform folder
+        run: echo $ERU_URI
+        working-directory: ./terraform
+      
+      - name: Test TF Output root folder
+        run: echo $ERU_URI
 
       # - name: Log in to ECR
       #   run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${terraform output ecr_uri}
