@@ -1,5 +1,5 @@
 variable "region" {
-  default = "region"
+  default = "us-east-1"
   type    = string
 }
 variable "ecs_cluster_name" {
