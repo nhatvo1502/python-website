@@ -47,8 +47,3 @@ variable "ecs_service_name" {
   default = "nhat-flasknote-service"
   type    = string
 }
-
-variable "be_bucket_name" {
-  default = "nnote_tfstate_031225"
-  type    = string
-}
