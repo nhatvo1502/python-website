@@ -6,10 +6,11 @@ from flask_login import LoginManager
 from sqlalchemy_utils import database_exists, create_database
 
 db = SQLAlchemy()
-DB_USERNAME = "root"
-DB_PASSWORD = "password"
-DB_HOST = "host.docker.internal"
+DB_USERNAME = "admin"
+DB_PASSWORD = "Welcome123#!"
+# DB_HOST = "host.docker.internal"
 # DB_HOST = "localhost"
+DB_HOST = "nnotedb.cyhfgtpbee5r.us-east-1.rds.amazonaws.com"
 DB_NAME = "nnote_database"
 
 
