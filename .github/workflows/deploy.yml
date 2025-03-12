@@ -66,10 +66,8 @@ jobs:
       
       - name: Terraform Outputs
         run: |
-          echo ${terraform output ecr_uri }
-          echo ${terraform output cluster_arn }
-          echo ${terraform output service_name }
-          echo ${terraform output region }
+          ecr_uri=$${terraform output ecr_uri}
+          echo $ecr_uri
       
       # - name: Export Terraform output
       #   id: tf
