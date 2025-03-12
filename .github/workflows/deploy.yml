@@ -68,6 +68,7 @@ jobs:
         run: |
           ecr_uri=${terraform output ecr_uri}
           echo $ecr_uri
+        working-directory: ./terraform
       
       # - name: Export Terraform output
       #   id: tf
