@@ -51,5 +51,5 @@ resource "aws_ecs_service" "web" {
     assign_public_ip = true
   }
 
-  depends_on = [ aws_vpc.nnote ]
+  depends_on = [aws_vpc.nnote]
 }
