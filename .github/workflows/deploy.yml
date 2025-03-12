@@ -68,27 +68,23 @@ jobs:
         id: tf
         if: success()
         run: |
-          echo "ECR_URI=$(terraform output -raw ecr_uri)" >> $GITHUB_ENV
+          echo "TF_EURI=$(terraform output -raw ecr_uri)" >> $GITHUB_ENV
+          echo "TF_CARN=$(terraform output -raw cluster_arn)" >> $GITHUB_ENV
+          echo "TF_SN=$(terraform output -raw service_name)" >> $GITHUB_ENV
+          echo "TF_Region=$(terraform output -raw region)" >> $GITHUB_ENV
         working-directory: ./terraform
-      
-      - name: Test TF Outputs terraform folder
-        run: echo $ERU_URI
-        working-directory: ./terraform
-      
-      - name: Test TF Output root folder
-        run: echo $ERU_URI
 
-      # - name: Log in to ECR
-      #   run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${terraform output ecr_uri}
+      - name: Log in to ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $TF_EURI
       
-      # - name: Build Docker
-      #   run: docker build -t nnote-app .
+      - name: Build Docker
+        run: docker build -t nnote-app .
       
-      # - name: Tag Docker
-      #   run: docker tag nnote-app:latest ${terraform output ecr_uri}:latest
+      - name: Tag Docker
+        run: docker tag nnote-app:latest $TF_EURI:latest
 
-      # - name: Push Docker
-      #   run: docker push ${terraform output ecr_uri}:latest
+      - name: Push Docker
+        run: docker push $TF_EURI:latest
       
-      # - name: Force Redeployment ECS
-      #   run: aws ecs update-service --cluster ${terraform output cluster_arn} --service ${terraform output service_name} --force-new-deployment --region ${terraform output region}
+      - name: Force Redeployment ECS
+        run: aws ecs update-service --cluster $TF_CARN --service $TF_SN --force-new-deployment --region $TF_Region
