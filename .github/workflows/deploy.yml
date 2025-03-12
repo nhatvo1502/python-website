@@ -37,3 +37,10 @@ jobs:
           terraform validate
           terraform plan
           terraform apply ---auto -approve
+      
+      - name: Auto clean up if Apply failed
+        if: failure()
+        run: |
+          terraform destroy --auto-approve
+          aws s3 rm s3://nnote-tfstate-bucket-031225 --recursive
+          aws s3 rb s3://nnote-tfstate-bucket-031225 --force
