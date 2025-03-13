@@ -66,6 +66,7 @@ resource "aws_db_instance" "nnotedb" {
   password               = var.db_password
   vpc_security_group_ids = [aws_security_group.nnote_vpc_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.nnotedb.name
+  skip_final_snapshot    = true
 }
 
 resource "aws_db_subnet_group" "nnotedb" {
