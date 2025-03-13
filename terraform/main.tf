@@ -53,3 +53,22 @@ resource "aws_ecs_service" "web" {
 
   depends_on = [aws_vpc.nnote]
 }
+
+# Create RDS DB
+
+resource "aws_db_instance" "nnotedb" {
+  db_name                = var.db_name
+  allocated_storage      = 20
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = var.db_instance_class
+  username               = var.db_username
+  password               = var.db_password
+  vpc_security_group_ids = [aws_security_group.nnote_vpc_sg.id]
+  db_subnet_group_name   = aws_db_subnet_group.nnotedb.name
+}
+
+resource "aws_db_subnet_group" "nnotedb" {
+  name       = var.subnet_g_name
+  subnet_ids = [aws_subnet.s1.id, aws_subnet.s2.id]
+}

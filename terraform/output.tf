@@ -13,3 +13,7 @@ output "service_name" {
 output "region" {
   value = var.region
 }
+
+output "db_endpoint" {
+  value = aws_db_instance.nnotedb.endpoint
+}

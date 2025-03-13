@@ -19,8 +19,18 @@ variable "s1_cidr" {
   type    = string
 }
 
+variable "s1_az" {
+  default = "us-east-1a"
+  type    = string
+}
+
 variable "s2_cidr" {
   default = "10.0.2.0/24"
+  type    = string
+}
+
+variable "s2_az" {
+  default = "us-east-1b"
   type    = string
 }
 
@@ -77,5 +87,28 @@ variable "ecsTaskExecutionRole" {
 
 variable "ecs_service_name" {
   default = "nhat-flasknote-service"
+  type    = string
+}
+
+variable "db_name" {
+  default = "nnotedb"
+  type    = string
+}
+
+variable "db_instance_class" {
+  default = "db.t4g.micro"
+  type    = string
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
+}
+
+variable "subnet_g_name" {
+  default = "nnote-subnet-g"
   type    = string
 }
