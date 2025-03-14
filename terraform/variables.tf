@@ -91,7 +91,7 @@ variable "ecs_service_name" {
 }
 
 variable "db_name" {
-  type    = string
+  type = string
 }
 
 variable "db_instance_class" {
