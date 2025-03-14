@@ -81,11 +81,12 @@ jobs:
           echo ${{ secrets.DB_PASSWORD }}
           echo ${{ secrets.DB_NAME }}
 
-          echo ${{ env.TF_UERI }}
-          echo ${{ env.TF_CARN }}
-          echo ${{ env.TF_SN }}
-          echo ${{ env.TF_REGION }}
-          echo ${{ env.TF_ENDPOINT }}
+          echo "TF_UERI=${{ env.TF_UERI }}"
+          echo "ecr_eri=$(terraform output -raw ecr_uri)"
+          echo "TF_CARN=${{ env.TF_CARN }}"
+          echo "TF_SN=${{ env.TF_SN }}"
+          echo "TF_REGION=${{ env.TF_REGION }}"
+          echo "TF_ENDPOINT=${{ env.TF_ENDPOINT }}"
 
       # - name: Log in to ECR
       #   run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $TF_EURI
