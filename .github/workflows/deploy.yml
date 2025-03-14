@@ -87,23 +87,23 @@ jobs:
           echo "TF_REGION=${{ env.TF_REGION }}"
           echo "TF_ENDPOINT=${{ env.TF_ENDPOINT }}"
 
-      # - name: Log in to ECR
-      #   run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $TF_EURI
+      - name: Log in to ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $TF_EURI
       
-      # - name: Build Docker
-      #   run: |
-      #     docker build \
-      #       --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} \
-      #       --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-      #       --build-arg DB_NAME=${{ secrets.DB_NAME }} \
-      #       --build-arg DB_HOST=${{ env.TF_ENDPONTS }} \
-      #       -t nnote-app .
+      - name: Build Docker
+        run: |
+          docker build \
+            --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} \
+            --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            --build-arg DB_NAME=${{ secrets.DB_NAME }} \
+            --build-arg DB_HOST=${{ env.TF_ENDPONTS }} \
+            -t nnote-app .
       
-      # - name: Tag Docker
-      #   run: docker tag nnote-app:latest $TF_EURI:latest
+      - name: Tag Docker
+        run: docker tag nnote-app:latest $TF_EURI:latest
 
-      # - name: Push Docker
-      #   run: docker push $TF_EURI:latest
+      - name: Push Docker
+        run: docker push $TF_EURI:latest
       
-      # - name: Force Redeployment ECS
-      #   run: aws ecs update-service --cluster $TF_CARN --service $TF_SN --force-new-deployment --region $TF_REGION
+      - name: Force Redeployment ECS
+        run: aws ecs update-service --cluster $TF_CARN --service $TF_SN --force-new-deployment --region $TF_REGION
