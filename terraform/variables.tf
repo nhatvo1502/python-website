@@ -91,7 +91,6 @@ variable "ecs_service_name" {
 }
 
 variable "db_name" {
-  default = "nnotedb"
   type    = string
 }
 

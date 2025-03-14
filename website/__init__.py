@@ -6,10 +6,10 @@ from flask_login import LoginManager
 from sqlalchemy_utils import database_exists, create_database
 
 db = SQLAlchemy()
-DB_USERNAME = "admin"
-DB_PASSWORD = "password"
-DB_HOST = "nnote-database.cyhfgtpbee5r.us-east-1.rds.amazonaws.com"
-DB_NAME = "nnote_database"
+DB_USERNAME = os.getenv("DB_USERNAME") # Passing from GHA Environment Secrets
+DB_PASSWORD = os.getenv("DB_PASSWORD") # Passing from GHA Environment Secrets
+DB_HOST = os.getenv("DB_HOST") # Passing from Terraform Output
+DB_NAME = os.getenv("DB_NAME") # Passing from GHA Environment Secrets
 
 
 def create_app():

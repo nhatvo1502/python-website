@@ -1,6 +1,9 @@
 name: Deploy
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -50,7 +53,7 @@ jobs:
         continue-on-error: false
 
       - name: Terraform Apply
-        run: terraform apply --auto-approve
+        run: terraform apply --auto-approve -var="db_username=${{ secrets.DB_USERNAME }}" -var="db_password=${{ secrets.DB_PASSWORD }}" -var="db_name=${{ secrets.DB_NAME }}"
         working-directory: ./terraform
         continue-on-error: false
       
@@ -68,14 +71,21 @@ jobs:
           echo "TF_EURI=$(terraform output -raw ecr_uri)" >> $GITHUB_ENV
           echo "TF_CARN=$(terraform output -raw cluster_arn)" >> $GITHUB_ENV
           echo "TF_SN=$(terraform output -raw service_name)" >> $GITHUB_ENV
-          echo "TF_Region=$(terraform output -raw region)" >> $GITHUB_ENV
+          echo "TF_REGION=$(terraform output -raw region)" >> $GITHUB_ENV
+          echo "TF_ENDPOINTS=$(terraform output -raw endpoint)" >> $GITHUB_ENV
         working-directory: ./terraform
 
       - name: Log in to ECR
         run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $TF_EURI
       
       - name: Build Docker
-        run: docker build -t nnote-app .
+        run: |
+          docker build \
+            --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} \
+            --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            --build-arg DB_NAME=${{ secrets.DB_NAME }} \
+            --build-arg DB_HOST=${{ env.TF_ENDPONTS }} \
+            -t nnote-app .
       
       - name: Tag Docker
         run: docker tag nnote-app:latest $TF_EURI:latest
@@ -84,4 +94,4 @@ jobs:
         run: docker push $TF_EURI:latest
       
       - name: Force Redeployment ECS
-        run: aws ecs update-service --cluster $TF_CARN --service $TF_SN --force-new-deployment --region $TF_Region
+        run: aws ecs update-service --cluster $TF_CARN --service $TF_SN --force-new-deployment --region $TF_REGION
