@@ -77,9 +77,9 @@ jobs:
 
       - name: Print GHA Environment Variables
         run: |
-          echo $DB_NAME
-          echo $DB_USERNAME
-          echo $DB_PASSWORD
+          echo ${{ secrets.DB_USERNAME }}
+          echo ${{ secrets.DB_PASSWORD }}
+          echo ${{ secrets.DB_NAME }}
 
           echo ${{ env.TF_UERI }}
           echo ${{ env.TF_CARN }}
