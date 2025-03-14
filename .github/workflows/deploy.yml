@@ -82,7 +82,6 @@ jobs:
           echo ${{ secrets.DB_NAME }}
 
           echo "TF_EURI=${{ env.TF_EURI }}"
-          echo "ecr_eri=$(terraform output -raw ecr_uri)"
           echo "TF_CARN=${{ env.TF_CARN }}"
           echo "TF_SN=${{ env.TF_SN }}"
           echo "TF_REGION=${{ env.TF_REGION }}"
