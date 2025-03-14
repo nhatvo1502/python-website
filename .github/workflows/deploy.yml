@@ -81,7 +81,7 @@ jobs:
           echo ${{ secrets.DB_PASSWORD }}
           echo ${{ secrets.DB_NAME }}
 
-          echo "TF_UERI=${{ env.TF_UERI }}"
+          echo "TF_EURI=${{ env.TF_EURI }}"
           echo "ecr_eri=$(terraform output -raw ecr_uri)"
           echo "TF_CARN=${{ env.TF_CARN }}"
           echo "TF_SN=${{ env.TF_SN }}"
