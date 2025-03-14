@@ -63,6 +63,7 @@ jobs:
           terraform destroy --auto-approve -var='db_name="a"' -var='db_password="b"' -var='db_username="c"'
           aws s3 rm s3://nnote-tfstate-031225 --recursive
           aws s3 rb s3://nnote-tfstate-031225 --force
+        working-directory: ./terraform
       
       - name: Export Terraform output
         id: tf
