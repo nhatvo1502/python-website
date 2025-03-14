@@ -72,7 +72,7 @@ jobs:
           echo "TF_CARN=$(terraform output -raw cluster_arn)" >> $GITHUB_ENV
           echo "TF_SN=$(terraform output -raw service_name)" >> $GITHUB_ENV
           echo "TF_REGION=$(terraform output -raw region)" >> $GITHUB_ENV
-          echo "TF_ENDPOINTS=$(terraform output -raw endpoint)" >> $GITHUB_ENV
+          echo "TF_ENDPOINTS=$(terraform output -raw db_endpoint)" >> $GITHUB_ENV
         working-directory: ./terraform
 
       - name: Log in to ECR
