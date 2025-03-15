@@ -108,3 +108,4 @@ jobs:
       
       - name: Force Redeployment ECS
         run: aws ecs update-service --cluster $TF_CARN --service $TF_SN --force-new-deployment --region $TF_REGION
+        
