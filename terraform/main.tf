@@ -57,7 +57,6 @@ resource "aws_ecs_service" "web" {
 # Create RDS DB
 
 resource "aws_db_instance" "nnotedb" {
-  db_name                = var.db_name
   allocated_storage      = 20
   engine                 = "mysql"
   engine_version         = "8.0"
