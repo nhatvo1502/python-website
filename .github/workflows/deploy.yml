@@ -98,7 +98,7 @@ jobs:
             --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} \
             --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
             --build-arg DB_NAME=${{ secrets.DB_NAME }} \
-            --build-arg DB_HOST=${{ env.TF_ENDPOiNT }} \
+            --build-arg DB_HOST=${{ env.TF_ENDPOINT }} \
             -t nnote-app .
       
       - name: Tag Docker
