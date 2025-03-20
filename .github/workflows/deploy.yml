@@ -73,7 +73,8 @@ jobs:
           echo "TF_CARN=$(terraform output -raw cluster_arn)" >> $GITHUB_ENV
           echo "TF_SN=$(terraform output -raw service_name)" >> $GITHUB_ENV
           echo "TF_REGION=$(terraform output -raw region)" >> $GITHUB_ENV
-          echo "TF_ENDPOINT=$(terraform output -raw db_endpoint)" >> $GITHUB_ENV
+          HOST=$(echo "$(terraform output -raw db_endpoint)" | cut -d ':' -f1)
+          echo "TF_ENDPOINT=$HOST" >> $GITHUB_ENV
         working-directory: ./terraform
 
       - name: Print GHA Environment Variables
