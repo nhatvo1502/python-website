@@ -8,16 +8,16 @@ This project is a web application built using Python Flask and hosted on AWS Clo
 - **GitHub Actions**: CI/CD pipeline for automated deployments
 - **AWS OIDC**: Secure authentication for GitHub Actions to access AWS
 - **Terraform**: Infrastructure as Code (IaC) to manage AWS resources
-- **AWS RDS**: Managed relational database service
+- **AWS RDS**: Relational database service
 - **AWS ECS/ECR**: Ochestrated container task and service
-- **AWS VPC**: Managed virtual network
+- **AWS VPC**: Virtual network
 
 ## Prerequisites
 Before setting up the project, ensure you have:
 - AWS account with necessary IAM permissions
 - GitHub repository with GitHub Actions enabled
 - Terraform installed (`>= 1.x`)
-- Python (`>= 3.8`) and pip installed
+- Python (`>= 3.11`) and pip installed
 - Docker (for local testing)
 - MySQL Workbench (for database testing)
 
@@ -25,7 +25,7 @@ Before setting up the project, ensure you have:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-repo/flask-webapp-aws.git
+git clone https://github.com/nhatvo1502/python-website.git
 cd python-website
 ```
 
@@ -43,32 +43,27 @@ aws configure
 
 Alternatively, set up AWS OIDC in GitHub Actions for secure authentication.
 
-### 4. Deploy Infrastructure Using Terraform
+### 4. Configure GitHub Actions
+Create your own Data Base secrets: `DB_NAME`, `DB_PASSWORD`, `DB_USERNAME` in your GitHub repo by navigating to:
+
+`Settings > Secrets and variables > Actions > Repository secrets`
+
+### 5. Deploy Infrastructure Using GitHub Actions
 ```bash
-cd terraform
-terraform init
-terraform plan
-terraform apply -auto-approve
+git add .
+git commit -m "Deploy"
+git push origin main
 ```
-This will provision the necessary AWS resources, including RDS.
 
 ### 5. Run Application Locally (as Container)
+Require an existing [MySQL Database](https://dev.mysql.com/doc/refman/8.4/en/windows-installation.html)
+
+Update `python-website/website/__init__.py` with your existing db connection
+
 ```bash
 docker build -t nnote-app .
 docker run -p 5000:5000 nnote-app
 ```
-
-### 6. Configure GitHub Actions
-Create your own Data Base secrets: `DB_NAME`, `DB_PASSWORD`, `DB_USERNAME` github repo > Settings > Secrets and variables > Actions > Repository secrets
-Update `.github/workflows/deploy.yml` with your AWS and repository details.
-
-### 7. Push Changes to GitHub
-```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
-```
-GitHub Actions will automatically deploy the application to AWS.
 
 ## Project Structure
 ```
