@@ -121,4 +121,3 @@ DB endpoint can be found under `Print GHA Environment Variables` from Github Act
 
 ---
 Feel free to contribute and enhance this project! 🚀
-
