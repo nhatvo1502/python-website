@@ -1,5 +1,7 @@
 # Flask WebApp with GitHub Actions, AWS OIDC, Terraform, and AWS RDS
 
+![alt text](image.png)
+
 ## Overview
 This project is a web application built using Python Flask and hosted on AWS Cloud Infrastructure. The deployment is automated using GitHub Actions (GHA) with AWS OpenID Connect (OIDC) authentication. Terraform is used for IaC to provision AWS resources, including an ECS, ECR, VPC, RDS and permission groups.
 
